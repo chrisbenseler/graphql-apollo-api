@@ -17,6 +17,8 @@ const typeDefs = gql`
         greetings: [String!]
         tasks: [Task!]
         task(id: ID!): Task
+        users: [User!]
+        user(id: ID!): User
     }
 
     type User {
@@ -38,10 +40,15 @@ const resolvers = {
     Query: {
         greetings: () => ['Hello', 'World'],
         tasks: () => tasks,
-        task: (_, args) => tasks.find(task => task.id === args.id) 
+        task: (_, args) => tasks.find(task => task.id === args.id),
+        users: () => users,
+        user: (_, args) => users.find(user => user.id === args.id),
     },
     Task: {
-        user: ({ userId}) => users.find(user => user.id === userId)
+        user: ({ userId }) => users.find(user => user.id === userId)
+    },
+    User: {
+        tasks: ({ id }) => tasks.filter(task => task.userId === id)
     }
 }
 
