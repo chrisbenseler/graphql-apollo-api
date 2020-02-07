@@ -7,7 +7,10 @@ const User = require('../database/models/user')
 module.exports = {
     Query: {
         users: () => users,
-        user: (_, args) => users.find(user => user.id === args.id),
+        user: (_, { id }, { email }) => {
+            console.log(email)
+            return users.find(user => user.id === id)
+        },
     },
     User: {
         tasks: ({ id }) => tasks.filter(task => task.userId === id)
@@ -37,7 +40,7 @@ module.exports = {
                 if(!isPassWordValid) {
                     throw new Error('Invalid credentials')
                 }
-                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET || 'mysecret', { expiresIn: '1d' })
+                const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET || 'mysecretkey', { expiresIn: '1d' })
                 return { token }
             } catch(e) {
                 console.error(e)
