@@ -11,3 +11,5 @@ module.exports.connection = async () => {
         throw(e)
     }
 }
+
+module.exports.isValidObjectId = id => mongoose.Types.ObjectId.isValid(id)

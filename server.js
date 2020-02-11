@@ -24,7 +24,8 @@ const apolloServer = new ApolloServer({
     context: async ({ req }) => {
         await verifyUser(req)
         return {
-            email: req.email
+            email: req.email,
+            loggedInUserId: req.loggedInUserId
         }
     }
 })
