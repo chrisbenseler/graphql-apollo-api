@@ -10,7 +10,6 @@ module.exports = {
     Query: {
         user: combineResolvers(isAuthenticated, async(_, __, { email }) => {
             try {
-                console.log(email)
                 const user = await User.findOne({ email })
                 if(!user)
                     throw new Error('User not found')
