@@ -41,7 +41,16 @@ module.exports = {
                 console.error(e)
                 throw new Error(e)
             }
-        })
+        }),
+        updateTask: combineResolvers(isAuthenticated, isTaskOwner, async (_, { id,  input }) => {
+            try {
+                const task = await Task.findByIdAndUpdate(id, { ...input },  { new: true })
+                return task
+            } catch(e) {
+                console.error(e)
+                throw new Error(e)
+            }
+        }),
     },
     Task: {
         user: async (parent) => {
